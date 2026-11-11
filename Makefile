@@ -10,13 +10,13 @@ HOST ?= 127.0.0.1
 PORT ?= 8000
 
 .DEFAULT_GOAL := help
-.PHONY: help setup install env migrate migrations seed superuser run test lint format check shell clean \
+.PHONY: help setup install env migrate migrations seed superuser run test lint format check shell clean images \
 	up down build logs ps dc-shell dc-manage dc-test dc-lint dc-reset
 
 help: ## Показать список команд
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  make %-14s %s\n", $$1, $$2}'
 
-setup: install env migrate seed ## Первый запуск: зависимости, .env, миграции, комплекты для примера
+setup: install env migrate images seed ## Первый запуск: зависимости, .env, миграции, комплекты для примера
 	@echo ""
 	@echo "Готово. Запуск: make run → http://$(HOST):$(PORT)/"
 	@echo "Админка: make superuser → http://$(HOST):$(PORT)/admin/"
@@ -37,6 +37,9 @@ migrate: ## Применить миграции
 
 migrations: ## Создать миграции после правки моделей
 	$(MANAGE) makemigrations
+
+images: ## Нарезать фото из assets/photos в static/img/photos (WebP для srcset)
+	$(MANAGE) build_images
 
 seed: ## Комплекты для примера (JAC T9, Haval H3, «Ваша модель»); повторный запуск дублей не создаёт
 	$(MANAGE) seed_demo

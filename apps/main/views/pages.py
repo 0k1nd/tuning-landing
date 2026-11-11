@@ -21,13 +21,13 @@ VARIANTS = (
     {
         "title": "Нержавеющая сталь AISI 304",
         "text": "Зеркальная полировка",
-        "image": "img/variant-steel.webp",
+        "photo": "variant-steel",
         "alt": "[Защита бампера из нержавеющей стали AISI 304 с зеркальной полировкой]",
     },
     {
         "title": "Чёрный металл",
         "text": "Порошковое покрытие",
-        "image": "img/variant-black.webp",
+        "photo": "variant-black",
         "alt": "[Защита бампера из чёрного металла с порошковым покрытием]",
     },
 )

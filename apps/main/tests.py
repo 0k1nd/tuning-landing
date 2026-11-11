@@ -1,8 +1,14 @@
+import json
+import tempfile
 from io import StringIO
+from pathlib import Path
+from unittest import mock
 
 from django.core.management import call_command
+from django.template import Context, Template
 from django.test import Client, TestCase
 from django.urls import reverse
+from PIL import Image
 
 from apps.main.forms import LeadForm
 from apps.main.models import Kit, Lead, SiteSettings
@@ -130,3 +136,51 @@ class IndexPageV4Tests(TestCase):
         Kit.objects.create(code="X5", car_model="Tank 300", part="Передняя защита", order=3)
         html = self.client.get(reverse("main:index")).content.decode()
         self.assertIn('aria-hidden="true">X5</p>', html)
+
+
+class BuildImagesTests(TestCase):
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.src = Path(tmp.name) / "src"
+        self.out = Path(tmp.name) / "out"
+        self.src.mkdir()
+        Image.new("RGB", (1500, 1000), "white").save(self.src / "hero.jpg")
+        photos = {"hero": {"widths": (640, 1280, 2400), "sizes": "100vw"}}
+        for target in (
+            "apps.main.management.commands.build_images",
+            "apps.main.templatetags.photos",
+        ):
+            for name, value in (("OUTPUT_DIR", self.out), ("PHOTOS", photos)):
+                patcher = mock.patch(f"{target}.{name}", value)
+                patcher.start()
+                self.addCleanup(patcher.stop)
+        patcher = mock.patch("apps.main.management.commands.build_images.SOURCE_DIR", self.src)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+        from apps.main.templatetags import photos as tag_module
+
+        tag_module._manifest.cache_clear()
+        self.addCleanup(tag_module._manifest.cache_clear)
+
+    def test_resizes_without_upscaling_and_renders_srcset(self):
+        call_command("build_images", stdout=StringIO())
+        self.assertEqual(
+            sorted(p.name for p in self.out.glob("*.webp")), ["hero-1280.webp", "hero-640.webp"]
+        )
+        manifest = json.loads((self.out / "manifest.json").read_text())
+        self.assertEqual(manifest["hero"], {"widths": [640, 1280], "width": 1500, "height": 1000})
+
+        html = Template(
+            '{% load photos %}{% photo "hero" "Фото" lazy=False priority=True %}'
+        ).render(Context())
+        self.assertIn(
+            'srcset="/static/img/photos/hero-640.webp 640w, '
+            '/static/img/photos/hero-1280.webp 1280w"',
+            html,
+        )
+        self.assertIn('width="1500" height="1000"', html)
+        self.assertIn('fetchpriority="high"', html)
+        self.assertNotIn("loading=", html)
+        self.assertNotIn("class=", html)

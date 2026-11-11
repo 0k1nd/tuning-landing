@@ -269,6 +269,7 @@ Fallback: `system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`. Inter за
 ## Изображения
 
 - WebP + `srcset`. Главное фото до 250 КБ и без `loading="lazy"`, остальные — `loading="lazy"`.
+- Оригиналы — `assets/photos/<имя>.jpg|png|webp`; `make images` нарезает WebP нужных ширин в `static/img/photos/`, в шаблоне — тег `{% photo %}` (ширины и `sizes` — в `apps/main/photos.py`).
 - Первый экран: JAC T9 с защитой на природе, горизонтальное, от 2400px по ширине, свободное место слева внизу под текст.
 - Машины в профиль — PNG/WebP с прозрачностью.
 - Пока фото нет — заглушки в квадратных скобках.

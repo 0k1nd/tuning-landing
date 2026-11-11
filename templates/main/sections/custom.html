@@ -1,7 +1,6 @@
-{% load static %}
+{% load photos %}
 <section class="photo-section photo-section--custom" id="custom" aria-labelledby="custom-title">
-    <img class="photo-section__img" src="{% static 'img/custom.webp' %}" width="2400" height="1100"
-         alt="[Замер автомобиля для индивидуальной защиты бампера]" loading="lazy">
+    {% photo "custom" "[Замер автомобиля для индивидуальной защиты бампера]" css_class="photo-section__img" %}
     <div class="container photo-section__content">
         <h2 id="custom-title">Нет вашей модели? Разработаем защиту под неё</h2>
         <p class="photo-section__lead">[Текст: замер, разработка и изготовление под вашу модель]</p>

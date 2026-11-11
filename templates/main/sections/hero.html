@@ -1,7 +1,6 @@
-{% load static %}
+{% load photos %}
 <section class="photo-section photo-section--hero" id="top" aria-labelledby="hero-title">
-    <img class="photo-section__img" src="{% static 'img/hero.webp' %}" width="2400" height="1350"
-         alt="[JAC T9 с установленной защитой бампера на природе]" fetchpriority="high">
+    {% photo "hero" "[JAC T9 с установленной защитой бампера на природе]" css_class="photo-section__img" lazy=False priority=True %}
     <div class="container photo-section__content">
         <p class="eyebrow">[Надзаголовок]</p>
         <h1 id="hero-title">Защита бамперов для китайских внедорожников</h1>

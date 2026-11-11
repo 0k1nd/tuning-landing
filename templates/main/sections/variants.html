@@ -1,4 +1,4 @@
-{% load static %}
+{% load photos %}
 <section class="section section--chalk" id="variants" aria-labelledby="variants-title">
     <div class="container">
         <h2 class="section__title" id="variants-title">Два исполнения</h2>
@@ -6,7 +6,7 @@
             {% for variant in variants %}
                 <li class="variant">
                     <figure class="variant__photo">
-                        <img src="{% static variant.image %}" width="1200" height="900" alt="{{ variant.alt }}" loading="lazy">
+                        {% photo variant.photo variant.alt %}
                     </figure>
                     <h3>{{ variant.title }}</h3>
                     <p class="model__muted">{{ variant.text }}</p>
