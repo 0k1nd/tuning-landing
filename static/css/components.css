@@ -179,7 +179,7 @@
   text-decoration: none;
 }
 
-/* 768–1023px и ниже: меню на второй строке. Бургер для < 768px — этап 6 */
+/* 768–1023px: меню на второй строке */
 @media (max-width: 1023px) {
   .header__inner {
     grid-template-columns: 1fr auto;
@@ -191,6 +191,72 @@
   .header__logo {
     justify-self: start;
   }
+}
+
+/* Бургер: только < 768px и только с JS (без JS меню видно всегда) */
+.burger {
+  display: none;
+  grid-area: burger;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-carbon);
+  cursor: pointer;
+}
+
+.burger__close,
+.header.is-open .burger__open {
+  display: none;
+}
+
+.header.is-open .burger__close {
+  display: inline;
+}
+
+@media (max-width: 767px) {
+  .js .header__inner {
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas:
+      "logo burger cta"
+      "nav nav nav";
+  }
+
+  .js .burger {
+    display: inline-flex;
+  }
+
+  .js .header__nav {
+    display: none;
+  }
+
+  .js .header.is-open .header__nav {
+    display: block;
+  }
+
+  .js .header.is-open .nav {
+    flex-direction: column;
+  }
+}
+
+/* Ссылка «Перейти к содержанию»: видна только в фокусе */
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 1;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+main:focus {
+  outline: none;
 }
 
 .logo {
@@ -225,9 +291,6 @@
   display: grid;
   gap: var(--space-6);
   justify-items: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
 .kit {
@@ -332,9 +395,24 @@
 
 .contact-list {
   display: grid;
-  gap: var(--space-2);
   padding: 0;
   list-style: none;
+}
+
+/* Ссылки в списках: зона нажатия не меньше --tap-target; строки без ссылок — той же высоты */
+.contact-list li,
+.footer__list li {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-target);
+}
+
+.contact-list a,
+.footer__list a,
+.footer__bottom a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
 }
 
 .form {
@@ -390,8 +468,7 @@
 
 .footer__list {
   display: grid;
-  gap: var(--space-2);
-  margin-top: var(--element-gap);
+  margin-top: var(--space-1);
   padding: 0;
   list-style: none;
 }
@@ -400,6 +477,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   gap: var(--space-4);
   margin-top: var(--space-10);
   padding-top: var(--space-6);

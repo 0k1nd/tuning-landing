@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.classList.add("js")</script>
     {# meta_title / meta_description задаются во view; иначе — заглушки до текстов заказчика #}
     {% with title=meta_title|default:"[Название] — [слоган]" description=meta_description|default:"[Описание сайта для поисковиков, 140–160 символов]" %}
     <title>{{ title }}</title>

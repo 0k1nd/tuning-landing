@@ -7,9 +7,9 @@
 
         {% if kits %}
             <div class="slider" data-slider aria-roledescription="карусель" aria-label="Готовые комплекты">
-                <ul class="slider__track">
+                <div class="slider__track">
                     {% for kit in kits %}
-                        <li class="kit" role="group" aria-roledescription="слайд"
+                        <div class="kit" role="group" aria-roledescription="слайд"
                             aria-label="{{ forloop.counter }} из {{ kits|length }}">
                             <figure class="kit__photo">
                                 <img src="{{ kit.photo.url }}" width="{{ kit.photo.width }}" height="{{ kit.photo.height }}"
@@ -29,9 +29,9 @@
                                     {% if kit.is_custom %}[Подобрать под мою модель]{% else %}[Заказать комплект]{% endif %}
                                 </a>
                             </div>
-                        </li>
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
 
                 <div class="slider__controls" hidden>
                     <button class="slider__arrow" type="button" data-slider-prev aria-label="Предыдущий комплект">

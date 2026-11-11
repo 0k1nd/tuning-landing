@@ -1,6 +1,7 @@
-<header class="header">
+<a class="skip-link btn btn--dark" href="#main">Перейти к содержанию</a>
+<header class="header" data-header>
     <div class="container header__inner">
-        <nav class="header__nav" aria-label="Основное меню">
+        <nav class="header__nav" id="main-nav" aria-label="Основное меню">
             <ul class="nav">
                 {% for anchor, label in nav_items %}
                     <li><a class="nav__link" href="#{{ anchor }}">{{ label }}</a></li>
@@ -8,6 +9,13 @@
             </ul>
         </nav>
         <a class="logo header__logo" href="#top" aria-label="[Название] — на главную">[Логотип]</a>
+        <button class="burger" type="button" aria-expanded="false" aria-controls="main-nav" data-burger>
+            <span class="visually-hidden">Меню</span>
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                <path class="burger__open" d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path class="burger__close" d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
         <a class="btn btn--dark header__cta" href="#contacts" data-lead-source="header">Связаться</a>
     </div>
 </header>
