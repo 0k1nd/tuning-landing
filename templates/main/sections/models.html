@@ -1,0 +1,34 @@
+{# Блоки моделей с монограммой: одна запись Kit — один блок, фон чередуется chalk / paper #}
+<section id="products" aria-labelledby="products-title">
+    <h2 class="visually-hidden" id="products-title">Готовые комплекты</h2>
+    {% for kit in kits %}
+        <article class="model {% cycle 'model--chalk' 'model--paper' %}" aria-labelledby="model-{{ kit.pk }}">
+            <div class="container model__inner">
+                <p class="model__code" aria-hidden="true">{{ kit.code }}</p>
+                <figure class="model__car">
+                    {% if kit.photo %}
+                        <img src="{{ kit.photo.url }}" width="{{ kit.photo.width }}" height="{{ kit.photo.height }}"
+                             alt="{{ kit.alt }}" loading="lazy">
+                    {% else %}
+                        <div class="model__car-placeholder">[Фото {{ kit.car_model }} в профиль без фона]</div>
+                    {% endif %}
+                </figure>
+                <div class="model__info">
+                    <h3 id="model-{{ kit.pk }}">{{ kit.car_model }}</h3>
+                    <p>{{ kit.part }}</p>
+                    {% if kit.material %}<p class="model__muted">{{ kit.material }}</p>{% endif %}
+                    {% if kit.price %}<p class="model__price">{{ kit.price }}</p>{% endif %}
+                    <div class="actions actions--center">
+                        <a class="btn btn--graphite" href="#variants">Подробнее</a>
+                        <a class="btn btn--light" href="#contacts" data-lead-source="model"
+                           data-car-model="{{ kit.car_model }}">Заказать</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    {% empty %}
+        <div class="section">
+            <p class="container">[Комплекты скоро появятся]</p>
+        </div>
+    {% endfor %}
+</section>

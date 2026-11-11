@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220" width="600" height="440" role="img" aria-label="Логотип «название», вертикальный">
-  <!-- Надпись — временная. После утверждения названия замените текст и переведите его в кривые. -->
-  <g transform="translate(90 0) scale(1.2)">
-    <rect x="35" y="27" width="30" height="46" rx="15" fill="#0D1212"/>
-    <path d="M22 24 Q50 0 78 24" fill="none" stroke="#0D1212" stroke-width="8"/>
-    <path d="M22 76 Q50 100 78 76" fill="none" stroke="#0D1212" stroke-width="8"/>
-  </g>
-  <text x="150" y="196" text-anchor="middle" font-family="Unbounded, Onest, sans-serif" font-weight="500" font-size="30" letter-spacing="1.8" fill="#0D1212">НАЗВАНИЕ</text></svg>

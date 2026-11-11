@@ -1,11 +1,14 @@
-<section class="section hero" id="top" aria-labelledby="hero-title">
-    <div class="container hero__inner">
+{% load static %}
+<section class="photo-section photo-section--hero" id="top" aria-labelledby="hero-title">
+    <img class="photo-section__img" src="{% static 'img/hero.webp' %}" width="2400" height="1350"
+         alt="[JAC T9 с установленной защитой бампера на природе]" fetchpriority="high">
+    <div class="container photo-section__content">
         <p class="eyebrow">[Надзаголовок]</p>
         <h1 id="hero-title">Защита бамперов для китайских внедорожников</h1>
-        <p class="hero__lead">[Подзаголовок: материалы и установка без сверления]</p>
-        <div class="hero__actions">
-            <a class="btn btn--primary" href="#products">Смотреть продукцию</a>
-            <a class="btn btn--outline" href="#custom">Индивидуальный заказ</a>
+        <p class="photo-section__lead">[Подзаголовок: AISI 304 или порошковое покрытие, установка без сверления]</p>
+        <div class="actions">
+            <a class="btn btn--light" href="#products">Смотреть комплекты</a>
+            <a class="btn btn--outline-white" href="#custom">Индивидуальный заказ</a>
         </div>
     </div>
 </section>

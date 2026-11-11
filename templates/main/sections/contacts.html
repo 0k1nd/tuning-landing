@@ -1,7 +1,6 @@
-<section class="section" id="contacts" aria-labelledby="contacts-title">
-    <div class="container split">
+<section class="section section--dark" id="contacts" aria-labelledby="contacts-title">
+    <div class="container contacts">
         <div class="stack">
-            <p class="eyebrow">Контакты</p>
             <h2 id="contacts-title">[Заголовок контактов]</h2>
             {% include "main/includes/contact_list.html" %}
         </div>
@@ -19,8 +18,12 @@
                     </p>
                 </div>
             {% endfor %}
-            <div>
-                <button class="btn btn--primary" type="submit">Отправить заявку</button>
+            <div class="form__submit">
+                <button class="btn btn--solar" type="submit">Отправить заявку</button>
+                <p class="legal">
+                    Нажимая кнопку, вы соглашаетесь на обработку персональных данных
+                    и с <a href="#">[политикой конфиденциальности]</a>.
+                </p>
             </div>
         </form>
     </div>

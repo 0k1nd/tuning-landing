@@ -19,13 +19,12 @@ html {
 
 body {
   margin: 0;
-  background: var(--color-sage);
-  color: var(--color-carbon);
-  font-family: var(--font-body);
+  background: var(--color-paper);
+  color: var(--color-graphite);
+  font-family: var(--font-sans);
   font-size: var(--text-body);
   font-weight: var(--font-weight-regular);
   line-height: var(--leading-body);
-  letter-spacing: var(--tracking-body);
   overflow-x: hidden;
 }
 
@@ -39,17 +38,32 @@ figure {
   margin: 0;
 }
 
-/* Заголовки — Unbounded, всегда 400 */
 h1,
 h2,
 h3 {
-  font-family: var(--font-display);
-  font-weight: var(--font-weight-regular);
-  letter-spacing: normal;
+  font-weight: var(--font-weight-medium);
   overflow-wrap: break-word;
 }
 
-/* Длинные слова («внедорожников») при минимальном H1 шире экрана 320–375px */
+h1 {
+  font-size: var(--text-h1);
+  line-height: var(--leading-h1);
+  letter-spacing: var(--tracking-h1);
+}
+
+h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+  letter-spacing: var(--tracking-h2);
+}
+
+h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+  letter-spacing: var(--tracking-h3);
+}
+
+/* Длинные слова при минимальном H1 на 320–375px */
 @media (max-width: 767px) {
   h1,
   h2,
@@ -58,35 +72,22 @@ h3 {
   }
 }
 
-h1 {
-  font-size: var(--text-h1);
-  line-height: var(--leading-h1);
-}
-
-h2 {
-  font-size: var(--text-h2);
-  line-height: var(--leading-h2);
-}
-
-h3 {
-  font-size: var(--text-h3);
-  line-height: var(--leading-h3);
-}
-
-/* Фокус с клавиатуры; на тёмной секции цвет меняет .section--dark через --focus-color */
-:focus-visible {
-  outline: var(--focus-width) solid var(--focus-color, var(--color-carbon));
-  outline-offset: var(--focus-offset);
-}
-
 a {
-  color: var(--color-carbon);
+  color: inherit;
 }
 
+/* Наведение: ссылки и кнопки бледнеют, мгновенно */
 @media (hover: hover) {
-  a:hover {
-    color: var(--color-forest);
+  a:hover,
+  button:hover {
+    opacity: var(--opacity-hover);
   }
+}
+
+/* Фокус с клавиатуры; на тёмном и на фото цвет меняет --focus-color */
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color, var(--color-graphite));
+  outline-offset: var(--focus-offset);
 }
 
 img,
@@ -104,11 +105,9 @@ input,
 textarea,
 select {
   font: inherit;
-  letter-spacing: inherit;
   color: inherit;
 }
 
-/* Контент секции: фон на всю ширину, содержимое — в контейнере */
 .container {
   width: 100%;
   max-width: calc(var(--container-max) + 2 * var(--gutter));

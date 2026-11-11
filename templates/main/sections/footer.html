@@ -1,36 +1,38 @@
 <footer class="footer">
-    <div class="container">
-        <div class="footer__grid">
-            <div class="stack">
-                <a class="logo" href="#top" aria-label="[Название] — на главную">{% include "main/includes/logo.html" %}</a>
-                <p>[Короткое описание компании]</p>
-            </div>
-            <nav aria-labelledby="footer-sections">
-                <p class="eyebrow" id="footer-sections">Разделы</p>
-                <ul class="footer__list">
-                    {% for anchor, label in nav_items %}
-                        <li><a href="#{{ anchor }}">{{ label }}</a></li>
-                    {% endfor %}
-                    <li><a href="#contacts">Контакты</a></li>
-                </ul>
-            </nav>
-            <nav aria-labelledby="footer-kits">
-                <p class="eyebrow" id="footer-kits">Комплекты</p>
-                <ul class="footer__list">
-                    {% for kit in ready_kits %}
-                        <li><a href="#products">{{ kit }}</a></li>
-                    {% empty %}
-                        <li>[Комплекты]</li>
-                    {% endfor %}
-                </ul>
-            </nav>
-            <div class="stack">
-                <p class="eyebrow">Контакты</p>
-                {% include "main/includes/contact_list.html" with compact=True %}
-            </div>
+    <div class="container footer__grid">
+        <div class="stack">
+            <a class="footer__logo" href="#top">
+                <svg class="logo logo--footer" role="img" aria-label="GRANFORT"><use href="#gf-logo"/></svg>
+            </a>
+            <p class="model__muted">[Короткое описание: производство защиты бамперов для китайских внедорожников]</p>
         </div>
-        <div class="footer__bottom">
-            <p>© {% now "Y" %} [Название]</p>
+        <nav aria-labelledby="footer-sections">
+            <h2 class="footer__title" id="footer-sections">Разделы</h2>
+            <ul class="footer__list">
+                {% for anchor, label in nav_items %}
+                    <li><a href="#{{ anchor }}">{{ label }}</a></li>
+                {% endfor %}
+                <li><a href="#contacts">Контакты</a></li>
+            </ul>
+        </nav>
+        <nav aria-labelledby="footer-kits">
+            <h2 class="footer__title" id="footer-kits">Комплекты</h2>
+            <ul class="footer__list">
+                {% for kit in kits %}
+                    <li><a href="#model-{{ kit.pk }}">{{ kit.car_model }}</a></li>
+                {% empty %}
+                    <li>[Комплекты]</li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <div>
+            <h2 class="footer__title">Контакты</h2>
+            {% include "main/includes/contact_list.html" with compact=True %}
+        </div>
+    </div>
+    <div class="container">
+        <div class="footer__bar">
+            <p>© {% now "Y" %} GRANFORT</p>
             <a href="#">[Политика конфиденциальности]</a>
         </div>
     </div>

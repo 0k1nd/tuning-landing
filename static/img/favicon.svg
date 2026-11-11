@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <style>
-    .m { fill: #0D1212; stroke: #0D1212; }
-    @media (prefers-color-scheme: dark) { .m { fill: #FFFFFF; stroke: #FFFFFF; } }
-  </style>
-  <rect class="m" x="35" y="27" width="30" height="46" rx="15" stroke="none"/>
-  <path class="m" d="M22 24 Q50 0 78 24" fill="none" stroke-width="8" style="fill: none"/>
-  <path class="m" d="M22 76 Q50 100 78 76" fill="none" stroke-width="8" style="fill: none"/>
-</svg>

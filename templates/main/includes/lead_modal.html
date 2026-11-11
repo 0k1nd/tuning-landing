@@ -1,26 +1,27 @@
 {# Модалка отправки заявки: три состояния в одной карточке (DESIGN.md, «Модалки отправки») #}
-<dialog class="modal" data-lead-modal aria-labelledby="lead-modal-title">
+<dialog class="modal" data-lead-modal aria-labelledby="lead-modal-title-loading">
     <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
 
-    {# Знак: static/img/brand/mark-loader.svg и mark-success.svg; анимация — в components.css #}
-    <svg class="mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-        <rect class="mark__capsule" x="35" y="27" width="30" height="46" rx="15"/>
-        <g class="mark__arcs">
-            <path class="mark__arc mark__arc--top" d="M22 24 Q50 0 78 24"/>
-            <path class="mark__arc mark__arc--bottom" d="M22 76 Q50 100 78 76"/>
-        </g>
-    </svg>
-
     <div class="modal__state" data-state="loading" role="status">
+        {# Шина: светлое кольцо + графитовый «протектор» из штрихов, вращается #}
+        <svg class="modal__icon tire" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <circle class="tire__ring" cx="32" cy="32" r="24"/>
+            <circle class="tire__tread" cx="32" cy="32" r="24"/>
+        </svg>
         <p class="modal__title" id="lead-modal-title-loading">Отправляем заявку</p>
     </div>
 
     <div class="modal__state" data-state="success" hidden>
+        {# Жёлтый круг, в нём прорисовывается галочка #}
+        <svg class="modal__icon check" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <circle class="check__circle" cx="32" cy="32" r="32"/>
+            <path class="check__mark" d="M20 33l8 8 16-17"/>
+        </svg>
         <h2 class="modal__title" id="lead-modal-title-success">Заявка отправлена</h2>
         <p>Мы перезвоним {{ site_settings.response_time|default:"[в течение … минут]" }}.</p>
-        <button class="btn btn--primary" type="button" data-modal-close data-autofocus>Хорошо</button>
+        <button class="btn btn--graphite" type="button" data-modal-close data-autofocus>Хорошо</button>
     </div>
 
     <div class="modal__state" data-state="error" hidden>
@@ -31,6 +32,6 @@
                 <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone_display }}</a>
             {% else %}[Телефон]{% endif %}
         </p>
-        <button class="btn btn--primary" type="button" data-modal-retry data-autofocus>Попробовать снова</button>
+        <button class="btn btn--graphite" type="button" data-modal-retry data-autofocus>Попробовать снова</button>
     </div>
 </dialog>

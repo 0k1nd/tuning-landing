@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>document.documentElement.classList.add("js")</script>
     {# meta_title / meta_description задаются во view; иначе — заглушки до текстов заказчика #}
-    {% with title=meta_title|default:"[Название] — [слоган]" description=meta_description|default:"[Описание сайта для поисковиков, 140–160 символов]" %}
+    {% with title=meta_title|default:"GRANFORT — защита бамперов для китайских внедорожников" description=meta_description|default:"[Описание сайта для поисковиков, 140–160 символов]" %}
     <title>{{ title }}</title>
     <meta name="description" content="{{ description }}">
     <link rel="canonical" href="{{ request.build_absolute_uri }}">
@@ -13,7 +13,7 @@
     {# Open Graph: превью ссылки в мессенджерах и соцсетях #}
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ru_RU">
-    <meta property="og:site_name" content="[Название]">
+    <meta property="og:site_name" content="GRANFORT">
     <meta property="og:title" content="{{ title }}">
     <meta property="og:description" content="{{ description }}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
@@ -21,14 +21,16 @@
     {% block og_image %}{% endblock %}
 
     {% block favicons %}
-    <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+    <link rel="icon" href="{% static 'img/favicon-32.png' %}" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
     {% endblock %}
 
-    {# Шрифты: Unbounded 400 — заголовки, Onest 400/600 — текст #}
+    {# Шрифты: Inter 400/500/600 — весь текст (предзагрузка), Unbounded 600 — только монограммы #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600&family=Unbounded:wght@400&display=swap">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600&display=swap">
 
     <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
@@ -36,6 +38,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body>
+    {% include "main/includes/logo_symbol.html" %}
     {% block content %}{% endblock %}
     <script type="module" src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}

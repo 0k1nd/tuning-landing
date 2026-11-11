@@ -1,9 +1,7 @@
-import shutil
-import tempfile
 from io import StringIO
 
 from django.core.management import call_command
-from django.test import Client, TestCase, override_settings
+from django.test import Client, TestCase
 from django.urls import reverse
 
 from apps.main.forms import LeadForm
@@ -101,16 +99,34 @@ class SiteSettingsTests(TestCase):
 
 
 class SeedDemoCommandTests(TestCase):
-    def setUp(self):
-        self.media_root = tempfile.mkdtemp()
-        self.addCleanup(shutil.rmtree, self.media_root)
-
     def test_creates_kits_once(self):
-        with override_settings(MEDIA_ROOT=self.media_root):
-            call_command("seed_demo", stdout=StringIO())
-            call_command("seed_demo", stdout=StringIO())
-            self.assertEqual(Kit.objects.count(), 5)
-            self.assertEqual(Kit.objects.filter(is_custom=True).count(), 1)
-            kit = Kit.objects.first()
-            self.assertTrue(kit.photo.name.endswith(".webp"))
-            self.assertEqual(len(kit.specs), 3)
+        call_command("seed_demo", stdout=StringIO())
+        call_command("seed_demo", stdout=StringIO())
+        self.assertEqual(list(Kit.objects.values_list("code", flat=True)), ["T9", "H3"])
+        kit = Kit.objects.get(code="T9")
+        self.assertEqual(kit.car_model, "JAC T9")
+        self.assertFalse(kit.photo)
+        self.assertEqual(kit.alt, "JAC T9 в профиль с защитой бампера")
+
+
+class IndexPageV4Tests(TestCase):
+    def setUp(self):
+        call_command("seed_demo", stdout=StringIO())
+
+    def test_model_blocks_rendered_from_kits(self):
+        html = self.client.get(reverse("main:index")).content.decode()
+        self.assertIn('<p class="model__code" aria-hidden="true">T9</p>', html)
+        self.assertIn('<p class="model__code" aria-hidden="true">H3</p>', html)
+        self.assertIn("model--chalk", html)
+        self.assertIn("model--paper", html)
+        self.assertIn("[Фото JAC T9 в профиль без фона]", html)
+
+    def test_logo_symbol_once_and_used(self):
+        html = self.client.get(reverse("main:index")).content.decode()
+        self.assertEqual(html.count('<symbol id="gf-logo"'), 1)
+        self.assertEqual(html.count('aria-label="GRANFORT"><use href="#gf-logo"/>'), 2)
+
+    def test_new_kit_is_one_record(self):
+        Kit.objects.create(code="X5", car_model="Tank 300", part="Передняя защита", order=3)
+        html = self.client.get(reverse("main:index")).content.decode()
+        self.assertIn('aria-hidden="true">X5</p>', html)

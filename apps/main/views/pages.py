@@ -8,12 +8,31 @@ from apps.main.models import Kit
 # Пункты меню: якоря на id секций (шапка и футер)
 NAV_ITEMS = (
     ("about", "О компании"),
-    ("products", "Продукция"),
+    ("products", "Комплекты"),
     ("benefits", "Преимущества"),
     ("custom", "Индивидуально"),
 )
 
-# Темы преимуществ — из спецификации; описания ждут текстов заказчика
+# Метки блока «О компании» — из спеки v4
+ABOUT_BADGES = ("AISI 304", "Порошковое покрытие", "Без сверления", "Доставка по России")
+
+# «Два исполнения» — из спеки v4; фото — заглушки до снимков заказчика
+VARIANTS = (
+    {
+        "title": "Нержавеющая сталь AISI 304",
+        "text": "Зеркальная полировка",
+        "image": "img/variant-steel.webp",
+        "alt": "[Защита бампера из нержавеющей стали AISI 304 с зеркальной полировкой]",
+    },
+    {
+        "title": "Чёрный металл",
+        "text": "Порошковое покрытие",
+        "image": "img/variant-black.webp",
+        "alt": "[Защита бампера из чёрного металла с порошковым покрытием]",
+    },
+)
+
+# «Почему GRANFORT»: 6 пунктов из задания; описания ждут текстов заказчика
 BENEFITS = (
     "Материалы",
     "Без сверления",
@@ -30,14 +49,14 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        kits = list(Kit.objects.filter(is_active=True))
         context.update(
             {
-                "meta_title": "Защита бамперов для китайских внедорожников — [Название]",
+                "meta_title": "GRANFORT — защита бамперов для китайских внедорожников",
                 "nav_items": NAV_ITEMS,
+                "about_badges": ABOUT_BADGES,
+                "variants": VARIANTS,
                 "benefits": BENEFITS,
-                "kits": kits,
-                "ready_kits": [kit for kit in kits if not kit.is_custom],
+                "kits": Kit.objects.filter(is_active=True),
                 "lead_form": LeadForm(initial={"source": "contacts"}),
             }
         )
