@@ -58,7 +58,16 @@ h2 {
   line-height: var(--leading-h2);
 }
 
-/* H3: размер и межстрочный не заданы — открытый вопрос в DESIGN.md */
+h3 {
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+}
+
+/* Фокус с клавиатуры; на тёмной секции цвет меняет .section--dark через --focus-color */
+:focus-visible {
+  outline: var(--focus-width) solid var(--focus-color, var(--color-carbon));
+  outline-offset: var(--focus-offset);
+}
 
 a {
   color: var(--color-carbon);

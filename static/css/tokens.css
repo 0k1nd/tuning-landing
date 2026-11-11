@@ -21,11 +21,13 @@
   --leading-h1: 1.08;
   --text-h2: clamp(30px, 4.6vw, 56px);
   --leading-h2: 1.12;
+  --text-h3: clamp(22px, 2.6vw, 36px);
+  --leading-h3: 1.2;
   --text-body: 16px; /* до 20px в крупных блоках */
   --leading-body: 1.5;
   --tracking-body: 0.01em;
   --text-button: 15px;
-  --text-eyebrow: 12px;
+  --text-eyebrow: 13px;
   --tracking-eyebrow: 0.05em;
 
   --font-weight-regular: 400;
@@ -52,6 +54,12 @@
   --section-gap: clamp(64px, 9vw, 120px);
   --card-padding: 24px;
   --element-gap: 12px;
+
+  /* Линии, фокус, зона нажатия */
+  --border-width: 1px;
+  --focus-width: 2px;
+  --focus-offset: 2px;
+  --tap-target: 44px;
 
   /* Радиусы */
   --radius-card: 36px;
