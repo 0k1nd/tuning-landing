@@ -1,0 +1,71 @@
+/* Дизайн-токены. Источник правды — DESIGN.md, раздел «Быстрый старт». Меняются только вместе с ним. */
+
+:root {
+  /* Цвета */
+  --color-sage: #D3E4DF;
+  --color-white: #FFFFFF;
+  --color-mint: #EDF4F2;
+  --color-carbon: #0D1212;
+  --color-forest: #34484A;
+  --color-slate: #565959;
+  --color-mist: #5F6B6C;
+  --color-teal: #64D5B3;
+  --color-overlay: rgba(13, 18, 18, 0.55);
+
+  /* Шрифты */
+  --font-display: "Unbounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Шкала */
+  --text-h1: clamp(36px, 6.4vw, 88px);
+  --leading-h1: 1.08;
+  --text-h2: clamp(30px, 4.6vw, 56px);
+  --leading-h2: 1.12;
+  --text-body: 16px; /* до 20px в крупных блоках */
+  --leading-body: 1.5;
+  --tracking-body: 0.01em;
+  --text-button: 15px;
+  --text-eyebrow: 12px;
+  --tracking-eyebrow: 0.05em;
+
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+
+  /* Отступы (шаг 4px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 40px;
+  --space-15: 60px;
+  --space-20: 80px;
+  --space-25: 100px;
+  --space-30: 120px;
+
+  /* Раскладка */
+  --container-max: 1200px;
+  --gutter: clamp(20px, 5vw, 40px);
+  --section-gap: clamp(64px, 9vw, 120px);
+  --card-padding: 24px;
+  --element-gap: 12px;
+
+  /* Радиусы */
+  --radius-card: 36px;
+  --radius-badge: 20px;
+  --radius-input: 16px;
+  --radius-button: 12px;
+  --radius-button-header: 16px;
+  --radius-round: 50%;
+
+  /* Движение */
+  --ease-slide: cubic-bezier(.65, 0, .35, 1);
+  --duration-slide: 0.8s;
+  --duration-photo: 1.4s;
+  --stagger: 0.08s;
+  --duration-spin: 1.1s;
+  --duration-snap: 0.55s;
+}

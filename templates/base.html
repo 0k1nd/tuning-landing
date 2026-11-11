@@ -3,7 +3,32 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% endblock %}</title>
+    {# meta_title / meta_description задаются во view; иначе — заглушки до текстов заказчика #}
+    {% with title=meta_title|default:"[Название] — [слоган]" description=meta_description|default:"[Описание сайта для поисковиков, 140–160 символов]" %}
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+
+    {# Open Graph: превью ссылки в мессенджерах и соцсетях #}
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="[Название]">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    {% endwith %}
+    {% block og_image %}{% endblock %}
+
+    {% block favicons %}{% endblock %}
+
+    {# Шрифты: Unbounded 400 — заголовки, Onest 400/600 — текст #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600&family=Unbounded:wght@400&display=swap">
+
+    <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
