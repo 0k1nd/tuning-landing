@@ -1,3 +1,15 @@
 {% extends "base.html" %}
 
-{% block content %}{% endblock %}
+{% block content %}
+    {% include "main/sections/header.html" %}
+    <main>
+        {% include "main/sections/hero.html" %}
+        {% include "main/sections/main_photo.html" %}
+        {% include "main/sections/about.html" %}
+        {% include "main/sections/products.html" %}
+        {% include "main/sections/benefits.html" %}
+        {% include "main/sections/custom.html" %}
+        {% include "main/sections/contacts.html" %}
+    </main>
+    {% include "main/sections/footer.html" %}
+{% endblock %}

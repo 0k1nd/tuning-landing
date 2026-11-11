@@ -1,0 +1,13 @@
+<header class="header">
+    <div class="container header__inner">
+        <nav class="header__nav" aria-label="Основное меню">
+            <ul class="nav">
+                {% for anchor, label in nav_items %}
+                    <li><a class="nav__link" href="#{{ anchor }}">{{ label }}</a></li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <a class="logo header__logo" href="#top" aria-label="[Название] — на главную">[Логотип]</a>
+        <a class="btn btn--dark header__cta" href="#contacts">Связаться</a>
+    </div>
+</header>

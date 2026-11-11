@@ -1,0 +1,27 @@
+<section class="section" id="contacts" aria-labelledby="contacts-title">
+    <div class="container split">
+        <div class="stack">
+            <p class="eyebrow">Контакты</p>
+            <h2 id="contacts-title">[Заголовок контактов]</h2>
+            {% include "main/includes/contact_list.html" %}
+        </div>
+
+        <form class="form" method="post" action="{% url 'main:lead_create' %}" novalidate>
+            {% csrf_token %}
+            {{ lead_form.source }}
+            {% for field in lead_form.visible_fields %}
+                <div class="field">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    <p class="field__error" id="{{ field.auto_id }}-error" hidden>
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v6M12 16.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        <span class="field__error-text"></span>
+                    </p>
+                </div>
+            {% endfor %}
+            <div>
+                <button class="btn btn--primary" type="submit">Отправить заявку</button>
+            </div>
+        </form>
+    </div>
+</section>

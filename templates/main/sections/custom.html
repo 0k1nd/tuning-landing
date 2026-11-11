@@ -1,0 +1,23 @@
+{% load static %}
+<section class="section section--dark" id="custom" aria-labelledby="custom-title">
+    <div class="container split">
+        <div class="stack">
+            <p class="eyebrow">Индивидуально</p>
+            <h2 id="custom-title">[Заголовок об индивидуальном заказе]</h2>
+            <p>[Текст: замер, изготовление под вашу модель]</p>
+            <div>
+                <a class="btn btn--primary" href="#contacts" data-source="custom">Отправить модель</a>
+            </div>
+        </div>
+        <div class="custom__photos">
+            <figure class="photo-card">
+                <img src="{% static 'img/custom-1.webp' %}" width="1200" height="900"
+                     alt="[Замер автомобиля под индивидуальную защиту]" loading="lazy">
+            </figure>
+            <figure class="photo-card">
+                <img src="{% static 'img/custom-2.webp' %}" width="1200" height="900"
+                     alt="[Индивидуальная защита бампера]" loading="lazy">
+            </figure>
+        </div>
+    </div>
+</section>

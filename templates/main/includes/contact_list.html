@@ -1,0 +1,20 @@
+<ul class="contact-list">
+    <li>
+        {% if site_settings.phone %}
+            <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone_display }}</a>
+        {% else %}[Телефон]{% endif %}
+    </li>
+    <li>
+        {% if site_settings.email %}
+            <a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>
+        {% else %}[Почта]{% endif %}
+    </li>
+    <li>
+        {% if site_settings.vk_url %}
+            <a href="{{ site_settings.vk_url }}" target="_blank" rel="noopener">ВКонтакте</a>
+        {% else %}[ВКонтакте]{% endif %}
+    </li>
+    {% if not compact %}
+        <li>{{ site_settings.address|default:"[Адрес производства]" }}</li>
+    {% endif %}
+</ul>

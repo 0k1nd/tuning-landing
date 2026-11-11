@@ -54,6 +54,9 @@
   --section-gap: clamp(64px, 9vw, 120px);
   --card-padding: 24px;
   --element-gap: 12px;
+  --slider-card-max: 920px;
+  --slider-arrow: 56px;
+  --modal-max: 380px;
 
   /* Линии, фокус, зона нажатия */
   --border-width: 1px;

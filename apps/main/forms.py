@@ -25,6 +25,16 @@ class LeadForm(forms.ModelForm):
             "name": {"required": "Укажите имя"},
         }
 
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("label_suffix", "")
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            if field.widget.is_hidden:
+                continue
+            field.widget.attrs.update(
+                {"class": "field__input", "aria-describedby": f"id_{name}-error"}
+            )
+
     def clean_name(self) -> str:
         name = self.cleaned_data["name"].strip()
         if not name:

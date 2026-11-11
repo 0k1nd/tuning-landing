@@ -1,0 +1,37 @@
+<footer class="footer">
+    <div class="container">
+        <div class="footer__grid">
+            <div class="stack">
+                <a class="logo" href="#top" aria-label="[Название] — на главную">[Логотип]</a>
+                <p>[Короткое описание компании]</p>
+            </div>
+            <nav aria-labelledby="footer-sections">
+                <p class="eyebrow" id="footer-sections">Разделы</p>
+                <ul class="footer__list">
+                    {% for anchor, label in nav_items %}
+                        <li><a href="#{{ anchor }}">{{ label }}</a></li>
+                    {% endfor %}
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+            <nav aria-labelledby="footer-kits">
+                <p class="eyebrow" id="footer-kits">Комплекты</p>
+                <ul class="footer__list">
+                    {% for kit in ready_kits %}
+                        <li><a href="#products">{{ kit }}</a></li>
+                    {% empty %}
+                        <li>[Комплекты]</li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            <div class="stack">
+                <p class="eyebrow">Контакты</p>
+                {% include "main/includes/contact_list.html" with compact=True %}
+            </div>
+        </div>
+        <div class="footer__bottom">
+            <p>© {% now "Y" %} [Название]</p>
+            <a href="#">[Политика конфиденциальности]</a>
+        </div>
+    </div>
+</footer>

@@ -46,6 +46,16 @@ h3 {
   font-family: var(--font-display);
   font-weight: var(--font-weight-regular);
   letter-spacing: normal;
+  overflow-wrap: break-word;
+}
+
+/* Длинные слова («внедорожников») при минимальном H1 шире экрана 320–375px */
+@media (max-width: 767px) {
+  h1,
+  h2,
+  h3 {
+    hyphens: auto;
+  }
 }
 
 h1 {

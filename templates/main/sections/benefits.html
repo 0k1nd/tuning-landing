@@ -1,0 +1,16 @@
+<section class="section" id="benefits" aria-labelledby="benefits-title">
+    <div class="container">
+        <div class="section__head">
+            <p class="eyebrow">Преимущества</p>
+            <h2 id="benefits-title">[Заголовок о преимуществах]</h2>
+        </div>
+        <ul class="benefits">
+            {% for title in benefits %}
+                <li class="card">
+                    <h3>{{ title }}</h3>
+                    <p>[Описание преимущества]</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
