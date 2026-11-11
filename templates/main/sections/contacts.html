@@ -6,7 +6,7 @@
             {% include "main/includes/contact_list.html" %}
         </div>
 
-        <form class="form" method="post" action="{% url 'main:lead_create' %}" novalidate>
+        <form class="form" method="post" action="{% url 'main:lead_create' %}" novalidate data-lead-form>
             {% csrf_token %}
             {{ lead_form.source }}
             {% for field in lead_form.visible_fields %}

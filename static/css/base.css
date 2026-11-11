@@ -116,6 +116,11 @@ select {
   padding-inline: var(--gutter);
 }
 
+/* Атрибут hidden сильнее display у компонентов */
+[hidden] {
+  display: none !important;
+}
+
 /* Скрыто визуально, доступно экранным чтецам */
 .visually-hidden {
   position: absolute;

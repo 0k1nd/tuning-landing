@@ -365,10 +365,6 @@
   color: var(--color-carbon);
 }
 
-.field__error[hidden] {
-  display: none;
-}
-
 /* ---------- Футер ---------- */
 
 .footer {
@@ -409,4 +405,209 @@
   padding-top: var(--space-6);
   border-top: var(--border-width) solid var(--color-slate);
   color: var(--color-slate);
+}
+
+/* ---------- Слайдер: режим карусели (включается из slider.js) ---------- */
+
+.section--mint {
+  overflow-x: clip; /* соседние карточки обрезаются краем экрана */
+}
+
+.slider.is-ready .slider__track {
+  grid-template-areas: "slide";
+  touch-action: pan-y;
+}
+
+.slider.is-ready .kit {
+  --scale: var(--slider-side-scale);
+  grid-area: slide;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(calc(var(--pos, 0) * (100% + var(--space-6)))) scale(var(--scale));
+  transition:
+    transform var(--duration-slide) var(--ease-slide),
+    opacity var(--duration-slide) var(--ease-slide);
+}
+
+.slider.is-ready .kit.no-transition {
+  transition: none;
+}
+
+.slider.is-ready .kit.is-active {
+  --scale: 1;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Соседние карточки видны только от 1024px */
+@media (min-width: 1024px) {
+  .slider.is-ready .kit.is-side {
+    opacity: var(--slider-side-opacity);
+    pointer-events: auto;
+    cursor: pointer;
+  }
+}
+
+.kit__photo {
+  overflow: hidden;
+}
+
+.kit.is-entering .kit__photo img {
+  animation: kit-photo-in var(--duration-photo) var(--ease-slide) both;
+}
+
+.kit.is-entering .badge,
+.kit.is-entering .kit__specs,
+.kit.is-entering .kit__body .btn {
+  animation: kit-rise var(--duration-slide) var(--ease-slide) both;
+}
+
+.kit.is-entering .badge {
+  animation-delay: var(--stagger);
+}
+
+.kit.is-entering .kit__specs {
+  animation-delay: calc(var(--stagger) * 2);
+}
+
+.kit.is-entering .kit__body .btn {
+  animation-delay: calc(var(--stagger) * 3);
+}
+
+@keyframes kit-photo-in {
+  from {
+    transform: scale(var(--photo-scale-from));
+  }
+}
+
+@keyframes kit-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-5));
+  }
+}
+
+/* Подбор букв: настоящий текст держит место, поверх — случайные символы */
+.scramble {
+  position: relative;
+}
+
+.scramble__fx {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.scramble.is-scrambling .scramble__real {
+  color: transparent;
+}
+
+.scramble.is-scrambling .scramble__fx {
+  visibility: visible;
+}
+
+/* ---------- Модалка отправки ---------- */
+
+.modal {
+  width: calc(100% - 2 * var(--gutter));
+  max-width: var(--modal-max);
+  padding: var(--card-padding);
+  border: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-white);
+  color: var(--color-carbon);
+  text-align: center;
+}
+
+.modal::backdrop {
+  background: var(--color-overlay);
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-carbon);
+  cursor: pointer;
+}
+
+.modal__state {
+  display: grid;
+  justify-items: center;
+  gap: var(--element-gap);
+}
+
+.modal__title {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+}
+
+.mark {
+  width: var(--space-15);
+  height: var(--space-15);
+  margin: var(--space-4) auto var(--space-6);
+}
+
+.mark__capsule {
+  fill: var(--color-carbon);
+}
+
+.mark__arcs {
+  fill: none;
+  stroke: var(--color-carbon);
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+
+.modal[data-state="loading"] .mark__arcs {
+  animation: mark-spin var(--duration-spin) linear infinite;
+}
+
+.modal[data-state="success"] .mark__arcs {
+  animation: mark-snap var(--duration-snap) var(--ease-slide) both;
+}
+
+@keyframes mark-spin {
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes mark-snap {
+  from {
+    transform: rotate(-180deg);
+  }
+}
+
+/* ---------- prefers-reduced-motion (DESIGN.md, «Движение») ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .slider.is-ready .kit {
+    transition: none;
+  }
+
+  .kit.is-entering .kit__photo img,
+  .kit.is-entering .badge,
+  .kit.is-entering .kit__specs,
+  .kit.is-entering .kit__body .btn,
+  .modal[data-state="success"] .mark__arcs {
+    animation: none;
+  }
+
+  .modal[data-state="loading"] .mark__arcs {
+    animation-duration: var(--duration-spin-reduced);
+  }
 }

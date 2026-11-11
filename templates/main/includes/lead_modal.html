@@ -1,0 +1,36 @@
+{# Модалка отправки заявки: три состояния в одной карточке (DESIGN.md, «Модалки отправки») #}
+<dialog class="modal" data-lead-modal aria-labelledby="lead-modal-title">
+    <button class="modal__close" type="button" data-modal-close aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+
+    {# Знак — временная заглушка (капсула + две дуги), до SVG знака от заказчика #}
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <rect class="mark__capsule" x="26" y="14" width="12" height="36" rx="6"/>
+        <g class="mark__arcs">
+            <path d="M17.86 17.86 A20 20 0 0 0 17.86 46.14"/>
+            <path d="M46.14 17.86 A20 20 0 0 1 46.14 46.14"/>
+        </g>
+    </svg>
+
+    <div class="modal__state" data-state="loading" role="status">
+        <p class="modal__title" id="lead-modal-title-loading">Отправляем заявку</p>
+    </div>
+
+    <div class="modal__state" data-state="success" hidden>
+        <h2 class="modal__title" id="lead-modal-title-success">Заявка отправлена</h2>
+        <p>Мы перезвоним {{ site_settings.response_time|default:"[в течение … минут]" }}.</p>
+        <button class="btn btn--primary" type="button" data-modal-close data-autofocus>Хорошо</button>
+    </div>
+
+    <div class="modal__state" data-state="error" hidden>
+        <h2 class="modal__title" id="lead-modal-title-error">Не удалось отправить</h2>
+        <p>
+            Попробуйте ещё раз или позвоните нам:
+            {% if site_settings.phone %}
+                <a href="tel:{{ site_settings.phone }}">{{ site_settings.phone_display }}</a>
+            {% else %}[Телефон]{% endif %}
+        </p>
+        <button class="btn btn--primary" type="button" data-modal-retry data-autofocus>Попробовать снова</button>
+    </div>
+</dialog>

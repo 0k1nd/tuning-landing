@@ -79,4 +79,8 @@
   --stagger: 0.08s;
   --duration-spin: 1.1s;
   --duration-snap: 0.55s;
+  --duration-spin-reduced: 4s;
+  --slider-side-scale: 0.84;
+  --slider-side-opacity: 0.45;
+  --photo-scale-from: 1.12;
 }
