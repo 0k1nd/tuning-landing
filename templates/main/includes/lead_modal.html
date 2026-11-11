@@ -4,12 +4,12 @@
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
     </button>
 
-    {# Знак — временная заглушка (капсула + две дуги), до SVG знака от заказчика #}
-    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
-        <rect class="mark__capsule" x="26" y="14" width="12" height="36" rx="6"/>
+    {# Знак: static/img/brand/mark-loader.svg и mark-success.svg; анимация — в components.css #}
+    <svg class="mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+        <rect class="mark__capsule" x="35" y="27" width="30" height="46" rx="15"/>
         <g class="mark__arcs">
-            <path d="M17.86 17.86 A20 20 0 0 0 17.86 46.14"/>
-            <path d="M46.14 17.86 A20 20 0 0 1 46.14 46.14"/>
+            <path class="mark__arc mark__arc--top" d="M22 24 Q50 0 78 24"/>
+            <path class="mark__arc mark__arc--bottom" d="M22 76 Q50 100 78 76"/>
         </g>
     </svg>
 

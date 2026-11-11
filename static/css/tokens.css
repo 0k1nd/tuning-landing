@@ -57,6 +57,7 @@
   --slider-card-max: 920px;
   --slider-arrow: 56px;
   --modal-max: 380px;
+  --logo-height: 32px;
 
   /* Линии, фокус, зона нажатия */
   --border-width: 1px;
@@ -83,4 +84,7 @@
   --slider-side-scale: 0.84;
   --slider-side-opacity: 0.45;
   --photo-scale-from: 1.12;
+  --ease-spin: cubic-bezier(.6, .1, .4, .9);
+  --ease-snap: cubic-bezier(.2, .8, .2, 1);
+  --mark-snap-offset: 14px;
 }

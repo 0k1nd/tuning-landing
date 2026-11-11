@@ -20,7 +20,10 @@
     {% endwith %}
     {% block og_image %}{% endblock %}
 
-    {% block favicons %}{% endblock %}
+    {% block favicons %}
+    <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+    {% endblock %}
 
     {# Шрифты: Unbounded 400 — заголовки, Onest 400/600 — текст #}
     <link rel="preconnect" href="https://fonts.googleapis.com">

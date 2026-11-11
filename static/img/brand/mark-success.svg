@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512" role="img" aria-label="Готово">
+  <style>
+    .t { animation: snapT .55s cubic-bezier(.2,.8,.2,1) both; }
+    .b { animation: snapB .55s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes snapT { from { transform: translateY(-14px); opacity: 0; } to { transform: none; opacity: 1; } }
+    @keyframes snapB { from { transform: translateY(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .t, .b { animation: none; } }
+  </style>
+  <rect x="35" y="27" width="30" height="46" rx="15" fill="#0D1212"/>
+  <path class="t" d="M22 24 Q50 0 78 24" fill="none" stroke="#34484A" stroke-width="8"/>
+  <path class="b" d="M22 76 Q50 100 78 76" fill="none" stroke="#34484A" stroke-width="8"/></svg>

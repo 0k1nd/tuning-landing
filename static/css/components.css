@@ -263,9 +263,28 @@ main:focus {
   display: inline-flex;
   align-items: center;
   min-height: var(--tap-target);
-  font-family: var(--font-display);
-  font-size: var(--text-button);
-  text-decoration: none;
+  color: var(--color-carbon);
+}
+
+.logo__svg {
+  display: block;
+  height: var(--logo-height);
+  width: auto;
+}
+
+.logo__svg--mark {
+  display: none;
+}
+
+/* < 768px: в шапке только знак, в футере — полный логотип */
+@media (max-width: 767px) {
+  .header__logo .logo__svg--mark {
+    display: block;
+  }
+
+  .header__logo .logo__svg--full {
+    display: none;
+  }
 }
 
 /* ---------- Первый экран ---------- */
@@ -643,19 +662,22 @@ main:focus {
 
 .mark__arcs {
   fill: none;
-  stroke: var(--color-carbon);
-  stroke-width: 4;
-  stroke-linecap: round;
+  stroke: var(--color-forest);
+  stroke-width: 8;
   transform-box: view-box;
   transform-origin: 50% 50%;
 }
 
 .modal[data-state="loading"] .mark__arcs {
-  animation: mark-spin var(--duration-spin) linear infinite;
+  animation: mark-spin var(--duration-spin) var(--ease-spin) infinite;
 }
 
-.modal[data-state="success"] .mark__arcs {
-  animation: mark-snap var(--duration-snap) var(--ease-slide) both;
+.modal[data-state="success"] .mark__arc--top {
+  animation: mark-snap-top var(--duration-snap) var(--ease-snap) both;
+}
+
+.modal[data-state="success"] .mark__arc--bottom {
+  animation: mark-snap-bottom var(--duration-snap) var(--ease-snap) both;
 }
 
 @keyframes mark-spin {
@@ -664,9 +686,17 @@ main:focus {
   }
 }
 
-@keyframes mark-snap {
+@keyframes mark-snap-top {
   from {
-    transform: rotate(-180deg);
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--mark-snap-offset)));
+  }
+}
+
+@keyframes mark-snap-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(var(--mark-snap-offset));
   }
 }
 
@@ -681,7 +711,7 @@ main:focus {
   .kit.is-entering .badge,
   .kit.is-entering .kit__specs,
   .kit.is-entering .kit__body .btn,
-  .modal[data-state="success"] .mark__arcs {
+  .modal[data-state="success"] .mark__arc {
     animation: none;
   }
 
