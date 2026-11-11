@@ -1,8 +1,13 @@
-from django.test import Client, TestCase
+import shutil
+import tempfile
+from io import StringIO
+
+from django.core.management import call_command
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
 from apps.main.forms import LeadForm
-from apps.main.models import Lead, SiteSettings
+from apps.main.models import Kit, Lead, SiteSettings
 
 
 class LeadFormPhoneTests(TestCase):
@@ -42,6 +47,13 @@ class LeadCreateViewTests(TestCase):
         self.assertEqual(lead.phone, "+79991234567")
         self.assertEqual(lead.status, Lead.Status.NEW)
         self.assertEqual(lead.source, "hero")
+
+    def test_valid_lead_is_logged_after_commit(self):
+        with self.assertLogs("apps.main.notifications", level="INFO") as logs:
+            with self.captureOnCommitCallbacks(execute=True):
+                self.client.post(self.url, {"name": "Иван", "phone": "+79991234567"})
+        self.assertIn("Новая заявка", logs.output[0])
+        self.assertIn("+79991234567", logs.output[0])
 
     def test_invalid_lead_returns_field_errors(self):
         response = self.client.post(self.url, {"name": "", "phone": "123"})
@@ -86,3 +98,19 @@ class SiteSettingsTests(TestCase):
         SiteSettings(phone="+70000000000").save()
         self.assertEqual(SiteSettings.objects.count(), 1)
         self.assertEqual(SiteSettings.load().phone_display, "+7 (000) 000-00-00")
+
+
+class SeedDemoCommandTests(TestCase):
+    def setUp(self):
+        self.media_root = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.media_root)
+
+    def test_creates_kits_once(self):
+        with override_settings(MEDIA_ROOT=self.media_root):
+            call_command("seed_demo", stdout=StringIO())
+            call_command("seed_demo", stdout=StringIO())
+            self.assertEqual(Kit.objects.count(), 5)
+            self.assertEqual(Kit.objects.filter(is_custom=True).count(), 1)
+            kit = Kit.objects.first()
+            self.assertTrue(kit.photo.name.endswith(".webp"))
+            self.assertEqual(len(kit.specs), 3)
