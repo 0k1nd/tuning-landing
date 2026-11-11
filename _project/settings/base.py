@@ -59,13 +59,25 @@ TEMPLATES = [
 WSGI_APPLICATION = "_project.wsgi.application"
 ASGI_APPLICATION = "_project.asgi.application"
 
-# Database
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# Database: Postgres, если задан POSTGRES_HOST (Docker), иначе SQLite (локальный make run)
+if os.getenv("POSTGRES_HOST"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB", "tuning_landing"),
+            "USER": os.getenv("POSTGRES_USER", "landing"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD", "landing"),
+            "HOST": os.getenv("POSTGRES_HOST"),
+            "PORT": os.getenv("POSTGRES_PORT", "5432"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

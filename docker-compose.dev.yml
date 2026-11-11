@@ -1,0 +1,67 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: compose/local/Dockerfile.dev
+    command: ["/app/compose/local/start_web.sh"]
+    volumes:
+      - .:/app
+      - venv-data:/opt/venv
+      - media-data:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      - DEBUG=True
+      - POSTGRES_DB=${POSTGRES_DB:-tuning_landing}
+      - POSTGRES_USER=${POSTGRES_USER:-landing}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-landing}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME:-admin}
+      - DJANGO_SUPERUSER_PASSWORD=${DJANGO_SUPERUSER_PASSWORD:-admin}
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL:-admin@local.local}
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:17
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-tuning_landing}
+      - POSTGRES_USER=${POSTGRES_USER:-landing}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-landing}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app-network
+
+  # Линтер в контейнере: docker compose -f docker-compose.dev.yml run --rm lint
+  lint:
+    build:
+      context: .
+      dockerfile: compose/local/Dockerfile.dev
+    entrypoint: []
+    command: ["sh", "-c", "ruff check . && ruff format --check ."]
+    volumes:
+      - .:/app
+      - venv-data:/opt/venv
+    profiles:
+      - tools
+
+volumes:
+  postgres_data:
+  media-data:
+  venv-data:
+
+networks:
+  app-network:
+    driver: bridge

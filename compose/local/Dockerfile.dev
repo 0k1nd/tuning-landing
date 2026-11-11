@@ -1,0 +1,25 @@
+# compose/local/Dockerfile.dev — образ для локальной разработки
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    UV_LINK_MODE=copy
+
+WORKDIR /app
+
+# ===== Виртуальное окружение вне /app: bind-mount кода его не перекрывает =====
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv
+ENV PATH="/opt/venv/bin:${PATH}"
+
+# ===== Зависимости (отдельный слой — пересобирается только при смене lock-файла) =====
+COPY pyproject.toml uv.lock ./
+RUN uv sync --locked --dev --no-install-project
+
+# ===== Код проекта =====
+COPY . .
+
+# LF и права на скрипты (на случай checkout в Windows)
+RUN sed -i 's/\r$//' compose/local/entrypoint.sh compose/local/start_web.sh \
+    && chmod +x compose/local/entrypoint.sh compose/local/start_web.sh
+
+ENTRYPOINT ["/app/compose/local/entrypoint.sh"]
